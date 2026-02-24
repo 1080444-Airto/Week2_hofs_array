@@ -10,10 +10,14 @@ public class NumArray1D<T> : Array1D<T>, INumArray1D<T> where T : IComparable<T>
 
     public T? Aggregate(Func<T, T, T> fx)
     {
-        int aggregate = 0;
-        for (int i = 0; i < _data.Length; i++)
+        if (_data.Length == 0)
+            return default;
+
+        T aggregate = _data[0];
+
+        for (int i = 1; i < _data.Length; i++)
         {
-            aggregate += _data[i];
+            aggregate = fx(aggregate, _data[i]);
         }
 
         return aggregate;
